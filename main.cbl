@@ -7,6 +7,9 @@ IDENTIFICATION DIVISION.
                ORGANIZATION IS INDEXED
                ACCESS MODE IS RANDOM
                RECORD KEY IS ITEM-ID.
+      * The indexed file organization is commonly used in AS/400 and IBM i
+      * systems for efficient data retrieval in inventory management apps.
+
        DATA DIVISION.
        FILE SECTION.
        FD INVENTORY-FILE.
@@ -15,6 +18,8 @@ IDENTIFICATION DIVISION.
            05 ITEM-NAME          PIC X(20).
            05 ITEM-QUANTITY      PIC 9(5).
            05 ITEM-PRICE         PIC 9(5)V99.
+      * This record structure represents a typical inventory item
+      * in a real-world system, including ID, name, quantity, and price.
 
        WORKING-STORAGE SECTION.
        01 WS-INVENTORY-RECORD.
@@ -26,6 +31,8 @@ IDENTIFICATION DIVISION.
        01 WS-CHOICE              PIC 9.
        01 WS-TEMP-QUANTITY       PIC 9(5).
        01 WS-TEMP-PRICE          PIC 9(5)V99.
+      * Working-storage variables are used for temporary data storage
+      * and user input, similar to real inventory management systems.
 
        PROCEDURE DIVISION.
        MAIN-PROCEDURE.
@@ -40,6 +47,8 @@ IDENTIFICATION DIVISION.
            DISPLAY "Initializing inventory..."
            PERFORM INITIALIZE-INVENTORY
            DISPLAY "Inventory initialized successfully.".
+      * In a real system, initialization might involve loading existing
+      * inventory data from a database or file system.
 
        INITIALIZE-INVENTORY.
            MOVE 10001 TO ITEM-ID
@@ -59,6 +68,8 @@ IDENTIFICATION DIVISION.
                INVALID KEY
                    DISPLAY "Error initializing inventory."
            END-WRITE.
+      * This simplified initialization represents adding initial stock.
+      * Real systems would typically load data from external sources.
 
        GAME-LOOP.
            DISPLAY " "
@@ -83,6 +94,9 @@ IDENTIFICATION DIVISION.
                WHEN OTHER
                    DISPLAY "Invalid choice. Please try again."
            END-EVALUATE.
+      * This menu-driven interface simulates common operations in
+      * inventory management systems, allowing users to interact
+      * with the inventory data.
 
        VIEW-INVENTORY.
            DISPLAY " "
@@ -105,6 +119,8 @@ IDENTIFICATION DIVISION.
                                ITEM-PRICE
                END-READ
            END-PERFORM.
+      * This routine demonstrates how to read and display all records
+      * from an indexed file, a common operation in inventory systems.
 
        ADD-STOCK.
            DISPLAY "Enter Item ID to add stock: " WITH NO ADVANCING
@@ -124,6 +140,8 @@ IDENTIFICATION DIVISION.
                    END-REWRITE
                    DISPLAY "Stock updated successfully."
            END-READ.
+      * This routine simulates adding stock to an existing item,
+      * a fundamental operation in inventory management.
 
        REMOVE-STOCK.
            DISPLAY "Enter Item ID to remove stock: " WITH NO ADVANCING
@@ -147,6 +165,8 @@ IDENTIFICATION DIVISION.
                        DISPLAY "Stock updated successfully."
                    END-IF
            END-READ.
+      * This routine demonstrates stock removal and error checking,
+      * essential for maintaining accurate inventory levels.
 
        UPDATE-PRICE.
            DISPLAY "Enter Item ID to update price: " WITH NO ADVANCING
@@ -166,8 +186,12 @@ IDENTIFICATION DIVISION.
                    END-REWRITE
                    DISPLAY "Price updated successfully."
            END-READ.
+      * Updating prices is a common task in inventory management,
+      * often requiring proper authorization in real-world systems.
 
        END-GAME.
            CLOSE INVENTORY-FILE
            DISPLAY "Thank you for playing the Inventory Management Game!"
            DISPLAY "Exiting...".
+      * Proper file closure is crucial in real systems to ensure
+      * data integrity and prevent file corruption.
